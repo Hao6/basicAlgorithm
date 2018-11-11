@@ -23,8 +23,25 @@ class graph:
     def del_edges(self,vertex_x,vertex_y):
         if self.is_edges(vertex_x,vertex_y) == True:
             self.graph_matrix[vertex_x][vertex_y] = 0
+            if self.is_directed == False:
+                self.graph_matrix[vertex_y][vertex_x] = 0
             if self.edges != None and (vertex_x,vertex_y) in self.edges:
                 self.edges.remove((vertex_x,vertex_y))
+                if self.is_directed == False:
+                    self.edges.remove((vertex_y,vertex_x))
+                
+    # 添加一条边
+    def add_edges(self,vertex_x, vertex_y ,weight):
+        self.graph_matrix[vertex_x][vertex_y] = weight
+        if self.is_edges(vertex_x,vertex_y) == False:
+            if self.is_directed == False:
+                self.graph_matrix[vertex_y][vertex_x] = weight
+            if self.edges != None and (vertex_x, vertex_y) not in self.edges:
+                self.edges.append((vertex_x, vertex_y))
+                if self.is_directed == False:
+                    self.edges.append((vertex_y, vertex_x))
+            
+
 
     # 生成顶点集合
     def build_vertexs(self):
@@ -115,8 +132,8 @@ for i in range(len(temp_graph)):
 # In[12]:
 
 
-try:
-    get_ipython().system(u'jupyter nbconvert --to python lib.ipynb')
-except:
-    pass
+# try:
+#     get_ipython().system(u'jupyter nbconvert --to python graph_class.ipynb')
+# except:
+#     pass
 
